@@ -1,0 +1,72 @@
+:root {
+  /* Colors */
+  --color-paper: #F6F6F7;
+  --color-paper-card: #FFFFFF;
+  --color-ink: #0A0A0A;
+  --color-ink-muted: #4A4A52;
+  --color-ink-faint: #55555E; /* >= 6.5:1 WCAG AA against #F6F6F7 */
+  --color-cobalt: #0B2EE6;
+  --color-cobalt-ink: #0925BA; /* >= 9.0:1 WCAG AA */
+  --color-magenta: #F25CF2;
+  --color-magenta-ink: #9E0E9E; /* >= 6.4:1 WCAG AA on light */
+  --color-green: #00C27A;
+  --color-green-ink: #007A4D; /* >= 5.1:1 WCAG AA on light */
+  --color-purple: #8B3FE0;
+  --color-purple-ink: #4A1199; /* >= 10.1:1 WCAG AA over grid */
+  --color-yellow: #FFD600;
+  --color-highlighter: rgba(255, 235, 59, 0.72);
+  --color-grid-line: rgba(190, 70, 200, 0.24);
+  --color-border-subtle: rgba(10, 10, 10, 0.14);
+
+  /* Typography Stacks */
+  --font-brush: "Kaushan Script", cursive;
+  --font-thin-script: "Mrs Saint Delafield", cursive;
+  --font-serif-caps: "Cormorant Garamond", Georgia, serif;
+  --font-mono: "Space Mono", monospace;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Radii */
+  --radius-xs: 2px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  /* Shadows (Handcrafted Sticker Depth) */
+  --shadow-sticker: 0 6px 18px rgba(10, 10, 10, 0.08), 0 2px 6px rgba(10, 10, 10, 0.04);
+  --shadow-sticker-hover: 0 16px 36px rgba(10, 10, 10, 0.14), 0 4px 12px rgba(10, 10, 10, 0.06);
+  --shadow-torn: 0 8px 24px rgba(10, 10, 10, 0.08);
+
+  /* Z-Index Hierarchy */
+  --z-bg: 0;
+  --z-deco: 1;
+  --z-sticker: 5;
+  --z-content: 10;
+  --z-sticker-drag: 40;
+  --z-nav: 100;
+  --z-play: 120;
+  --z-confetti: 200;
+
+  /* Layout */
+  --nav-height: 60px;
+  --container-max: 1240px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}

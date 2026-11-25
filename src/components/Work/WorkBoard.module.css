@@ -1,0 +1,664 @@
+.boardSection {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  width: 100%;
+  padding: clamp(56px, 8dvh, 96px) clamp(16px, 3vw, 40px) clamp(64px, 9dvh, 108px);
+  overflow: clip;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+/* ============================================================
+   SECTION HEADER
+   ============================================================ */
+.boardHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: clamp(32px, 5dvh, 52px);
+}
+
+.headerTopRow {
+  margin-bottom: 10px;
+}
+
+.headerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 3px 10px rgba(10, 10, 10, 0.06);
+}
+
+.badgeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-green);
+}
+
+.badgeText {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.titleUnderlineWrap {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.boardTitle {
+  font-family: var(--font-serif-caps);
+  font-size: clamp(2.4rem, 5vw, 4.1rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 1.05;
+}
+
+.headerUnderline {
+  width: clamp(180px, 24vw, 290px);
+  height: auto;
+  margin-top: -2px;
+  pointer-events: none;
+}
+
+.boardSubtitle {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--color-ink-muted);
+  max-width: 560px;
+  line-height: 1.55;
+}
+
+/* ============================================================
+   BOARD LAYOUT (FEATURED + MASONRY GRID)
+   ============================================================ */
+.featuredRow {
+  margin-bottom: 44px;
+}
+
+.masonryGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 44px 42px;
+  align-items: start;
+}
+
+/* Slot placement for asymmetric hand-pinned rhythm (02 to 05) */
+.slotFeatured {
+  width: 100%;
+}
+
+.slotItem1 {
+  grid-column: span 7;
+}
+
+.slotItem2 {
+  grid-column: span 5;
+  margin-top: 28px;
+}
+
+.slotItem3 {
+  grid-column: span 5;
+  margin-top: 12px;
+}
+
+.slotItem4 {
+  grid-column: span 7;
+}
+
+/* Pinning Entrance Animation (transform + opacity only) */
+@keyframes pinDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-22px) scale(0.96);
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(4px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.boardSlot {
+  position: relative;
+  min-width: 0;
+}
+
+.slotPrePin {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.97);
+}
+
+.slotPinned {
+  animation: pinDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--pin-delay, 0ms) both;
+}
+
+/* ============================================================
+   PROJECT CARD (SINGLE <a> WRAPPING WHOLE CARD)
+   ============================================================ */
+.projectCard {
+  position: relative;
+  display: block;
+  width: 100%;
+  background-color: var(--color-paper-card);
+  border: 1.5px solid rgba(10, 10, 10, 0.14);
+  border-radius: var(--radius-md);
+  padding: clamp(16px, 2.2vw, 26px);
+  box-shadow: var(--shadow-sticker);
+  text-decoration: none;
+  color: inherit;
+  user-select: none;
+  touch-action: pan-y;
+  transform: translate3d(var(--drag-x, 0px), var(--drag-y, 0px), 0) rotate(var(--card-tilt, 0deg));
+  transition:
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal),
+    border-color var(--transition-fast);
+}
+
+.dragging {
+  box-shadow: 0 24px 48px rgba(10, 10, 10, 0.24) !important;
+  transition: none !important;
+}
+
+.projectCard:focus-visible {
+  outline: 3px solid var(--card-accent, var(--color-cobalt));
+  outline-offset: 6px;
+}
+
+/* Pointer hover & keyboard focus interactions */
+@media (hover: hover) and (pointer: fine) {
+  .projectCard:not(.dragging):hover,
+  .projectCard:focus-visible {
+    transform: translate3d(var(--drag-x, 0px), calc(var(--drag-y, 0px) - 8px), 0) rotate(0deg);
+    box-shadow: var(--shadow-sticker-hover);
+    border-color: var(--card-accent, var(--color-ink));
+  }
+
+  .projectCard:hover .phoneMockup,
+  .projectCard:focus-visible .phoneMockup {
+    transform: translate3d(12px, -10px, 0) rotate(3deg);
+    opacity: 1;
+  }
+}
+
+.projectCard:hover .visitPill,
+.projectCard:focus-visible .visitPill {
+  background-color: var(--card-accent, var(--color-cobalt));
+  color: var(--card-accent-on-fill, #FFFFFF);
+  border-color: var(--card-accent, var(--color-cobalt));
+}
+
+.comingSoonCard {
+  border-style: dashed;
+}
+
+/* ============================================================
+   MASKING TAPE PIECES
+   ============================================================ */
+.cardTape,
+.tapeTopLeft,
+.tapeTopRight {
+  position: absolute;
+  width: 78px;
+  height: 20px;
+  background-color: rgba(255, 250, 224, 0.85);
+  border: 1px solid rgba(10, 10, 10, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.cardTape {
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1.5deg);
+}
+
+.tapeTopLeft {
+  top: -9px;
+  left: 18px;
+  transform: rotate(-18deg);
+}
+
+.tapeTopRight {
+  top: -9px;
+  right: 18px;
+  transform: rotate(16deg);
+}
+
+/* ============================================================
+   CARD INNER LAYOUTS
+   ============================================================ */
+.featuredLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 1fr);
+  gap: clamp(20px, 3vw, 36px);
+  align-items: center;
+}
+
+.masonryLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ============================================================
+   VISUAL STAGE: BROWSER WINDOW + PHONE MOCKUP
+   ============================================================ */
+.visualStage {
+  position: relative;
+  width: 100%;
+  padding-right: clamp(14px, 4%, 22px);
+  padding-bottom: 14px;
+}
+
+.browserFrame {
+  position: relative;
+  z-index: 2;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(10, 10, 10, 0.16);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(10, 10, 10, 0.07);
+}
+
+.browserChrome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 11px;
+  background: #EFEFF2;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.1);
+}
+
+.trafficLights {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.dotRed,
+.dotYellow,
+.dotGreen {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotRed {
+  background-color: #FF5F56;
+}
+.dotYellow {
+  background-color: #FFBD2E;
+}
+.dotGreen {
+  background-color: #27C93F;
+}
+
+.addressBar {
+  flex: 1;
+  min-width: 0;
+  background: #FFFFFF;
+  border: 1px solid rgba(10, 10, 10, 0.1);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.browserViewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #EAEAEF;
+  overflow: hidden;
+}
+
+.desktopShot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* Mobile Phone Mockup Overlay */
+.phoneMockup {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  width: clamp(62px, 19%, 112px);
+  transform: translate3d(0, 0, 0) rotate(2deg);
+  opacity: 1;
+  transition: transform var(--transition-bounce), opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .masonryCard:hover .phoneMockup,
+  .masonryCard:focus-visible .phoneMockup {
+    z-index: 4;
+    opacity: 1;
+    transform: translate3d(4px, -6px, 0) rotate(4deg);
+  }
+}
+
+.phoneBezel {
+  position: relative;
+  background: #0A0A0A;
+  border-radius: 14px;
+  padding: 6px 4px 5px;
+  border: 2px solid #222226;
+  box-shadow: 0 10px 24px rgba(10, 10, 10, 0.25);
+  overflow: hidden;
+}
+
+.phoneNotch {
+  display: block;
+  width: 24px;
+  height: 3px;
+  background: #2A2A2E;
+  border-radius: 2px;
+  margin: 0 auto 4px;
+}
+
+.mobileShot {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 390 / 844;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Fallback Thumbnail */
+.fallbackThumbnail {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.thumbnailPattern {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0.16) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+
+.thumbnailInitial {
+  font-family: var(--font-brush);
+  font-size: 64px;
+  color: #FFFFFF;
+  text-shadow: 2px 2px 0 rgba(10, 10, 10, 0.25);
+  position: relative;
+  z-index: 1;
+}
+
+.thumbnailKind {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(10, 10, 10, 0.8);
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  z-index: 1;
+}
+
+/* ============================================================
+   CARD INFO PANEL & STORY NOTE
+   ============================================================ */
+.cardInfoPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+}
+
+.cardIndex {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-ink-faint);
+  letter-spacing: 0.1em;
+}
+
+.cardKind {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cardTitle {
+  font-family: var(--font-mono);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.25;
+}
+
+.featuredCard .cardTitle {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+}
+
+.cardDescription {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+}
+
+/* Torn-paper Story Note */
+.storyNote {
+  position: relative;
+  background: #FFFDF2;
+  border: 1px solid rgba(10, 10, 10, 0.1);
+  padding: 10px 14px 10px 16px;
+  margin: 4px 0;
+  transform: rotate(-1deg);
+  box-shadow: 0 3px 10px rgba(10, 10, 10, 0.06);
+  clip-path: polygon(
+    0% 2px, 8% 0px, 16% 3px, 28% 0px, 40% 2px, 54% 0px, 68% 3px, 82% 0px, 94% 2px, 100% 1px,
+    100% calc(100% - 2px), 90% 100%, 76% calc(100% - 3px), 62% 100%, 46% calc(100% - 2px), 30% 100%, 16% calc(100% - 3px), 4% 100%, 0% calc(100% - 2px)
+  );
+}
+
+.storyPin {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--card-accent, var(--color-cobalt));
+}
+
+.storyText {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--color-ink);
+  padding-right: 12px;
+}
+
+/* Tags */
+.tagsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.tagBadge {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--color-ink-muted);
+  background: rgba(10, 10, 10, 0.05);
+  border: 1px solid rgba(10, 10, 10, 0.08);
+  padding: 3px 9px;
+  border-radius: var(--radius-xs);
+}
+
+/* Footer Visit Pill */
+.cardFooter {
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(10, 10, 10, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.visitPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--card-accent-ink, var(--color-cobalt-ink));
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--card-accent-ink, var(--color-cobalt-ink));
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.comingSoonBadge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-magenta-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ============================================================
+   TABLET BREAKPOINT (768px - 959px)
+   ============================================================ */
+@media (max-width: 959px) {
+  .featuredLayout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .masonryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px 38px;
+  }
+
+  .slotItem1,
+  .slotItem2,
+  .slotItem3,
+  .slotItem4 {
+    grid-column: span 1;
+    margin-top: 0;
+  }
+}
+
+/* ============================================================
+   MOBILE BREAKPOINT (360px - 600px)
+   ============================================================ */
+@media (max-width: 600px) {
+  .boardSection {
+    padding: 52px 16px 68px;
+  }
+
+  .masonryGrid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  /* Cap mobile card tilt to max +/- 2deg */
+  .projectCard {
+    padding: 16px;
+    transform: rotate(clamp(-2deg, var(--card-tilt, 0deg), 2deg));
+  }
+
+  .visualStage {
+    padding-right: 10px;
+    padding-bottom: 10px;
+  }
+
+  .phoneMockup {
+    display: block;
+    width: 66px;
+    opacity: 1;
+    transform: rotate(2deg);
+  }
+
+  .visitPill {
+    min-height: 44px;
+    padding: 10px 18px;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .slotPrePin,
+  .slotPinned {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}

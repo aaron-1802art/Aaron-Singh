@@ -1,0 +1,180 @@
+.aboutSection {
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+  width: 100%;
+  padding: 60px 24px 80px;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.tornAboutCard {
+  position: relative;
+  background-color: var(--color-paper-card);
+  padding: 40px 36px 44px;
+  box-shadow: var(--shadow-torn);
+  border: 1px solid rgba(10, 10, 10, 0.08);
+  transform: rotate(1deg);
+  transition: transform var(--transition-normal);
+  /* Jagged torn bottom and top edge */
+  clip-path: polygon(
+    0% 4px,
+    5% 0px,
+    10% 4px,
+    15% 1px,
+    20% 4px,
+    25% 0px,
+    30% 4px,
+    35% 1px,
+    40% 4px,
+    45% 0px,
+    50% 4px,
+    55% 1px,
+    60% 4px,
+    65% 0px,
+    70% 4px,
+    75% 1px,
+    80% 4px,
+    85% 0px,
+    90% 4px,
+    95% 1px,
+    100% 3px,
+    100% calc(100% - 4px),
+    95% 100%,
+    90% calc(100% - 3px),
+    85% 100%,
+    80% calc(100% - 3px),
+    75% 100%,
+    70% calc(100% - 3px),
+    65% 100%,
+    60% calc(100% - 3px),
+    55% 100%,
+    50% calc(100% - 3px),
+    45% 100%,
+    40% calc(100% - 3px),
+    35% 100%,
+    30% calc(100% - 3px),
+    25% 100%,
+    20% calc(100% - 3px),
+    15% 100%,
+    10% calc(100% - 3px),
+    5% 100%,
+    0% calc(100% - 4px)
+  );
+}
+
+.tornAboutCard:hover {
+  transform: rotate(0deg);
+}
+
+.cardPin {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-green);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.aboutBadge {
+  color: var(--color-cobalt-ink);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.locationBadge {
+  color: var(--color-ink-muted);
+}
+
+.aboutHeading {
+  font-family: var(--font-serif-caps);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.bioText {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-ink-muted);
+  margin-bottom: 32px;
+}
+
+.socialRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px dashed rgba(10, 10, 10, 0.12);
+  padding-top: 20px;
+}
+
+.socialLabel {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+.socialList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  list-style: none;
+}
+
+.socialLink {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: none;
+  background: rgba(10, 10, 10, 0.04);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.socialLink:hover {
+  background: var(--color-cobalt);
+  color: #FFFFFF;
+}
+
+@media (max-width: 600px) {
+  .tornAboutCard {
+    padding: 28px 20px 32px;
+  }
+  .aboutHeading {
+    font-size: 1.6rem;
+  }
+  .bioText {
+    font-size: 14px;
+  }
+  .socialRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+

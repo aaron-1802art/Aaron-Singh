@@ -1,0 +1,1049 @@
+.heroSection {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 1fr auto auto;
+  padding: clamp(50px, 6.8dvh, 68px) clamp(16px, 3vw, 44px) clamp(10px, 1.6dvh, 18px);
+  overflow-x: hidden;
+  box-sizing: border-box;
+  gap: clamp(6px, 1.2dvh, 14px);
+}
+
+/* Lock cleanly to viewport height on desktop screens >= 960px wide & >= 620px tall */
+@media (min-width: 960px) and (min-height: 620px) {
+  .heroSection {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+/* ============================================================
+   3-COLUMN COLLAGE STAGE
+   ============================================================ */
+.heroStage {
+  position: relative;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(350px, 1.4fr) minmax(220px, 1fr);
+  align-items: center;
+  gap: clamp(10px, 2vw, 28px);
+  min-height: 0;
+}
+
+/* LEFT WING: SHOWREEL DEVICE (UPPER-LEFT) + QUOTE & ARROW (LOWER-LEFT) */
+.leftWing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 100%;
+  max-height: clamp(410px, 64dvh, 620px);
+  gap: clamp(8px, 1.5dvh, 18px);
+}
+
+.showreelSlot {
+  position: relative;
+  z-index: var(--z-sticker);
+  width: clamp(200px, 20vw, 290px);
+}
+
+/* ============================================================
+   LIVE SHOWREEL DEVICE (TILTED LAPTOP + PHONE + PROGRESS)
+   ============================================================ */
+.showreelLink {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--color-ink);
+  outline: none;
+}
+
+.showreelLink:focus-visible .laptopBezel {
+  outline: 3px solid var(--color-cobalt);
+  outline-offset: 4px;
+}
+
+.showreelFloatWrap {
+  --base-tilt: 0deg;
+}
+
+.showreelDeviceStage {
+  position: relative;
+  width: 100%;
+  padding-right: clamp(18px, 2vw, 28px);
+  padding-bottom: clamp(8px, 1dvh, 14px);
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.showreelLink:hover .showreelDeviceStage,
+.showreelLink:focus-visible .showreelDeviceStage {
+  transform: perspective(900px) rotateX(0deg) rotateY(0deg) rotate(0deg) translateY(-4px) scale(1.02) !important;
+}
+
+.showreelLaptop {
+  width: 100%;
+}
+
+.laptopBezel {
+  position: relative;
+  background: #141418;
+  border-radius: 10px 10px 3px 3px;
+  padding: 9px 7px 7px;
+  border: 2px solid #0A0A0A;
+  box-shadow: var(--shadow-sticker);
+}
+
+.laptopWebcam {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #3A3A44;
+}
+
+.laptopScreen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #1B1B22;
+}
+
+.laptopBase {
+  position: relative;
+  width: 108%;
+  margin-left: -4%;
+  height: 9px;
+  background: linear-gradient(180deg, #E2E2E8 0%, #B4B4BE 100%);
+  border: 1.5px solid #0A0A0A;
+  border-radius: 2px 2px 8px 8px;
+  box-shadow: 0 5px 12px rgba(10, 10, 10, 0.16);
+}
+
+.laptopNotch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 3px;
+  background: #8E8E98;
+  border-radius: 0 0 3px 3px;
+}
+
+/* Crossfade + Slow Pan/Zoom */
+@keyframes showreelPanZoom {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.08) translate3d(-1.5%, -1.5%, 0);
+  }
+}
+
+.showreelSlide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 550ms ease;
+  pointer-events: none;
+}
+
+.showreelSlideActive {
+  opacity: 1;
+}
+
+.showreelSlideImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.showreelSlideActive .showreelSlideImg {
+  animation: showreelPanZoom 4s ease-out forwards;
+}
+
+/* Overlapping Small Phone Mockup */
+.showreelPhone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: clamp(46px, 26%, 68px);
+  z-index: 3;
+  transform: rotate(4deg);
+  transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.showreelLink:hover .showreelPhone,
+.showreelLink:focus-visible .showreelPhone {
+  transform: translate3d(4px, -4px, 0) rotate(6deg);
+}
+
+.showreelPhoneBezel {
+  background: #0A0A0A;
+  border-radius: 9px;
+  padding: 4px 3px 3px;
+  border: 1.5px solid #2A2A32;
+  box-shadow: 0 8px 18px rgba(10, 10, 10, 0.25);
+}
+
+.showreelPhoneNotch {
+  display: block;
+  width: 14px;
+  height: 2px;
+  background: #33333C;
+  border-radius: 2px;
+  margin: 0 auto 2px;
+}
+
+.showreelPhoneScreen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 390 / 844;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #1B1B22;
+}
+
+.showreelPhoneImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* Showreel Progress Bar & Title */
+.showreelMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(10, 10, 10, 0.14);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  box-shadow: 0 3px 10px rgba(10, 10, 10, 0.06);
+}
+
+.showreelProgress {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@keyframes showreelProgressFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.progressDot {
+  position: relative;
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(10, 10, 10, 0.14);
+  overflow: hidden;
+  transition: transform 200ms ease;
+}
+
+.progressDotActive {
+  transform: scaleY(1.3);
+}
+
+.progressDotFill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  animation: showreelProgressFill 3.5s linear forwards;
+}
+
+.showreelCaptionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.showreelTitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.showreelOpenHint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-cobalt-ink);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   TORN-PAPER QUOTE + LARGE ARROW
+   ============================================================ */
+.quoteArrowGroup {
+  position: relative;
+  z-index: var(--z-content);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: clamp(225px, 22vw, 330px);
+}
+
+.tornQuoteWrapper {
+  width: 100%;
+  transform: rotate(-2deg);
+  transition: transform var(--transition-normal);
+}
+
+.tornQuoteWrapper:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.tornQuoteCard {
+  position: relative;
+  background-color: var(--color-paper-card);
+  padding: clamp(10px, 1.3dvh, 15px) clamp(12px, 1.5vw, 20px) clamp(11px, 1.4dvh, 17px) clamp(16px, 1.8vw, 22px);
+  box-shadow: var(--shadow-torn);
+  border: 1px solid rgba(10, 10, 10, 0.12);
+  clip-path: polygon(
+    0% 4px, 4% 0px, 8% 5px, 14% 1px, 20% 4px, 26% 0px, 34% 5px, 42% 1px, 50% 4px, 58% 0px, 66% 5px, 74% 1px, 82% 4px, 90% 0px, 96% 4px, 100% 2px,
+    100% calc(100% - 3px), 96% 100%, 90% calc(100% - 4px), 84% 100%, 76% calc(100% - 4px), 68% 100%, 60% calc(100% - 4px), 52% 100%, 44% calc(100% - 4px), 36% 100%, 28% calc(100% - 4px), 20% 100%, 12% calc(100% - 4px), 4% 100%, 0% calc(100% - 3px)
+  );
+}
+
+.quoteMark {
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  font-family: var(--font-serif-caps);
+  font-size: 22px;
+  color: var(--color-magenta-ink);
+  line-height: 1;
+}
+
+.quoteText {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 0.9vw, 13px);
+  line-height: 1.48;
+  color: var(--color-ink);
+}
+
+.quoteAuthor {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-muted);
+}
+
+.highlighter {
+  background: var(--color-highlighter);
+  padding: 1px 4px;
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.quotePin {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-purple);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.quoteArrowWrap {
+  pointer-events: none;
+  z-index: var(--z-deco);
+  align-self: flex-end;
+  margin-top: 2px;
+  margin-right: -10px;
+}
+
+.largeBlueArrow {
+  width: clamp(58px, 5.5vw, 96px);
+  height: auto;
+}
+
+/* ============================================================
+   CENTER COLUMN: ROLES + BRUSH STROKES + 3D DEPTH NAME
+   ============================================================ */
+.heroCenter {
+  position: relative;
+  z-index: var(--z-content);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.roleScriptGroup {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotate(-4deg) translateX(clamp(-36px, -2.5vw, -10px));
+  --base-tilt: -4deg;
+  margin-bottom: clamp(-4px, -0.5dvh, 0px);
+}
+
+.roleScript {
+  font-family: var(--font-thin-script);
+  font-size: clamp(2.05rem, min(3.8vw, 6dvh), 3.3rem);
+  font-weight: 400;
+  color: var(--color-purple-ink);
+  -webkit-text-stroke: 0.45px var(--color-purple-ink);
+  text-shadow: 0 0 8px rgba(246, 246, 247, 0.96), 0 1px 0 rgba(246, 246, 247, 0.96);
+  line-height: 1.05;
+  user-select: none;
+  position: relative;
+  z-index: 2;
+}
+
+.roleStrokeMagenta {
+  width: clamp(115px, 13vw, 175px);
+  height: auto;
+  margin-top: -8px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.nameContainer {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.nameDepthLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: var(--font-brush);
+  font-size: clamp(3rem, min(7.2vw, 12.6dvh), 7.6rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  color: transparent;
+  -webkit-text-stroke: 2.5px var(--color-cobalt);
+  opacity: 0.36;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 1;
+  transition: transform 140ms ease-out;
+  will-change: transform;
+}
+
+.hugeName {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-brush);
+  font-size: clamp(3rem, min(7.2vw, 12.6dvh), 7.6rem);
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  text-shadow: 2px 2px 0px rgba(246, 246, 247, 0.96);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.brushUnderlineWrapper {
+  position: relative;
+  z-index: 2;
+  width: 88%;
+  max-width: clamp(230px, 31vw, 430px);
+  margin-top: clamp(-8px, -0.8dvh, -2px);
+  pointer-events: none;
+}
+
+.brushUnderline {
+  width: 100%;
+  height: auto;
+}
+
+.roleSerifGroup {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotate(2deg) translateX(clamp(10px, 2.5vw, 40px));
+  --base-tilt: 2deg;
+  margin-top: clamp(4px, 0.8dvh, 10px);
+}
+
+.roleSerif {
+  font-family: var(--font-serif-caps);
+  font-size: clamp(0.85rem, min(1.35vw, 2.2dvh), 1.22rem);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--color-cobalt-ink);
+  text-shadow: 0 0 8px rgba(246, 246, 247, 0.96);
+  user-select: none;
+  position: relative;
+  z-index: 2;
+}
+
+.roleStrokeGreen {
+  width: clamp(105px, 11.5vw, 155px);
+  height: auto;
+  margin-top: -3px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   RIGHT WING: SPINNING TEXT BADGE + 3 PROJECT CARDS
+   ============================================================ */
+.rightWing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 100%;
+  max-height: clamp(410px, 64dvh, 620px);
+  gap: clamp(8px, 1.4dvh, 16px);
+}
+
+.rightTopBadge {
+  position: relative;
+  z-index: var(--z-deco);
+  pointer-events: none;
+}
+
+.spinningBadgeWrap {
+  pointer-events: none;
+  user-select: none;
+}
+
+.spinningBadgeSvg {
+  width: clamp(108px, 10.5vw, 152px);
+  height: auto;
+  display: block;
+}
+
+/* Hero Project Stickers Cluster */
+.heroStickersCluster {
+  position: relative;
+  z-index: var(--z-sticker);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(7px, 1dvh, 11px);
+  width: 100%;
+}
+
+.heroProjectSticker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: clamp(210px, 20vw, 268px);
+  background-color: var(--color-paper-card);
+  border: 1.5px solid rgba(10, 10, 10, 0.14);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sticker);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--color-ink);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.stickerThumbWrap {
+  width: 60px;
+  height: 42px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(10, 10, 10, 0.1);
+  flex-shrink: 0;
+  margin: 5px 0 5px 4px;
+  background: #EFEFF2;
+}
+
+.stickerThumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.stickerThumbFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-family: var(--font-brush);
+  font-size: 20px;
+}
+
+.heroProjectStickerLive:hover,
+.heroProjectStickerLive:focus-visible {
+  box-shadow: var(--shadow-sticker-hover);
+  transform: translateY(-3px) scale(1.02) !important;
+  border-color: var(--color-cobalt);
+}
+
+.heroProjectStickerSoon {
+  border-style: dashed;
+}
+
+.stickerAccentBar {
+  width: 6px;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.stickerBody {
+  padding: clamp(5px, 0.7dvh, 8px) 10px clamp(5px, 0.7dvh, 8px) 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.stickerHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+}
+
+.stickerKind {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.stickerTitle {
+  font-family: var(--font-mono);
+  font-size: clamp(11.5px, 0.92vw, 13px);
+  font-weight: 700;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stickerVisit {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-cobalt-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  align-self: flex-end;
+}
+
+.stickerSoon {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-magenta-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  align-self: flex-end;
+}
+
+/* ============================================================
+   TILTED BLACK PROJECT TICKER BAND
+   ============================================================ */
+@keyframes tickerScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.tickerBand {
+  position: relative;
+  z-index: var(--z-sticker);
+  width: calc(100% + 48px);
+  margin: 2px 0 clamp(10px, 1.2vw, 20px) -24px;
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  padding: 6px 0;
+  transform: rotate(-0.55deg);
+  overflow: hidden;
+  border-top: 1.5px solid #222228;
+  border-bottom: 1.5px solid #222228;
+  box-shadow: 0 4px 12px rgba(10, 10, 10, 0.14);
+  user-select: none;
+  pointer-events: none;
+}
+
+.tickerTrack {
+  display: flex;
+  width: max-content;
+  animation: tickerScroll 26s linear infinite;
+  will-change: transform;
+}
+
+.tickerGroup {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-right: 18px;
+}
+
+.tickerName {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+.tickerStar {
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ============================================================
+   HERO BOTTOM BAR (LIVE CLOCK · CONNECT DOTS · EXPLORE WORK)
+   ============================================================ */
+.heroBottomBar {
+  position: relative;
+  z-index: var(--z-content);
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding-top: clamp(6px, 1.1dvh, 12px);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.bottomClockCol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.heroAvailability {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.heroGreenBeacon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-green);
+  box-shadow: 0 0 8px rgba(0, 194, 122, 0.6);
+  flex-shrink: 0;
+}
+
+.bottomDotsCol {
+  display: flex;
+  justify-content: center;
+}
+
+.bottomExploreCol {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.exploreWorkLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-cobalt-ink);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid var(--color-cobalt-ink);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 8px rgba(11, 46, 230, 0.12);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+  min-height: 36px;
+}
+
+.exploreWorkLink:hover {
+  background-color: var(--color-cobalt-ink);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.exploreArrow {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ============================================================
+   SHORT LAPTOP TUNING (e.g. 1366x650)
+   ============================================================ */
+@media (min-width: 960px) and (max-height: 700px) {
+  .heroSection {
+    padding-top: 42px;
+    padding-bottom: 6px;
+    gap: 12px;
+  }
+  .leftWing,
+  .rightWing {
+    max-height: 60dvh;
+    gap: 6px;
+  }
+  .showreelSlot {
+    width: 185px;
+  }
+  .showreelMeta {
+    padding: 3px 8px;
+  }
+  .tornQuoteCard {
+    padding: 8px 12px 9px 15px;
+  }
+  .quoteText {
+    font-size: 10.5px;
+    line-height: 1.38;
+  }
+  .quoteAuthor {
+    font-size: 9.5px;
+    margin-top: 3px;
+  }
+  .largeBlueArrow {
+    width: 44px;
+  }
+  .spinningBadgeSvg {
+    width: 96px;
+  }
+  .heroStickersCluster {
+    gap: 5px;
+  }
+  .stickerThumbWrap {
+    width: 50px;
+    height: 35px;
+  }
+  .stickerBody {
+    padding: 4px 8px 4px 2px;
+  }
+  .tickerBand {
+    padding: 3px 0;
+    transform: rotate(-0.6deg);
+  }
+  .heroBottomBar {
+    padding-top: 2px;
+  }
+  .bottomClockCol {
+    flex-wrap: nowrap;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  .exploreWorkLink {
+    padding: 4px 12px;
+    min-height: 32px;
+    font-size: 11px;
+  }
+}
+
+/* ============================================================
+   TABLET & MOBILE STACK (< 960px — 768, 390, 360)
+   ============================================================ */
+@media (max-width: 959px) {
+  .heroSection {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    min-height: 100dvh;
+    padding: 66px 16px 28px;
+    gap: 20px;
+  }
+
+  .heroStage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+  }
+
+  /* 1. Name First */
+  .heroCenter {
+    order: 1;
+    width: 100%;
+    padding: 6px 0;
+  }
+
+  .nameDepthLayer,
+  .hugeName {
+    font-size: clamp(2.5rem, 11.5vw, 4.4rem);
+    white-space: nowrap;
+  }
+
+  .roleScriptGroup {
+    transform: rotate(-3deg);
+    --base-tilt: -3deg;
+  }
+
+  .roleScript {
+    font-size: clamp(1.9rem, 7.5vw, 2.7rem);
+  }
+
+  .roleSerifGroup {
+    transform: rotate(1.5deg);
+    --base-tilt: 1.5deg;
+  }
+
+  .roleSerif {
+    font-size: clamp(0.8rem, 2.8vw, 1.05rem);
+    letter-spacing: 0.2em;
+  }
+
+  /* 2. Live Showreel Device + Quote below the name */
+  .leftWing {
+    order: 2;
+    max-height: none;
+    height: auto;
+    width: 100%;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .showreelSlot {
+    width: min(310px, 92%);
+  }
+
+  .quoteArrowGroup {
+    width: 100%;
+    max-width: min(440px, 100%);
+    align-items: center;
+  }
+
+  .quoteArrowWrap {
+    align-self: center;
+    margin: 2px 0 0;
+  }
+
+  .largeBlueArrow {
+    width: 64px;
+  }
+
+  /* 3. Smaller Spinning Badge + Stickers */
+  .rightWing {
+    order: 3;
+    max-height: none;
+    height: auto;
+    width: 100%;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .spinningBadgeSvg {
+    width: 96px;
+  }
+
+  .heroStickersCluster {
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    gap: 12px;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .heroProjectSticker {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .tickerBand {
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    transform: rotate(-0.8deg);
+  }
+
+  /* Bottom Bar stacks cleanly on mobile */
+  .heroBottomBar {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 14px;
+    padding-top: 8px;
+  }
+
+  .bottomClockCol {
+    justify-content: center;
+    gap: 8px 14px;
+  }
+
+  .bottomExploreCol {
+    justify-content: center;
+  }
+
+  .exploreWorkLink {
+    min-height: 44px;
+    padding: 10px 20px;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION OVERRIDES
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .tickerTrack {
+    animation: none !important;
+  }
+  .showreelSlideActive .showreelSlideImg {
+    animation: none !important;
+  }
+  .progressDotFill {
+    animation: none !important;
+    transform: scaleX(1);
+  }
+}

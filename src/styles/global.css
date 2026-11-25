@@ -1,0 +1,229 @@
+@import "@fontsource/kaushan-script/index.css";
+@import "@fontsource/mrs-saint-delafield/index.css";
+@import "@fontsource/cormorant-garamond/index.css";
+@import "@fontsource/space-mono/index.css";
+@import "./tokens.css";
+
+/* ============================================================
+   RESET & BOX SIZING
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-ink);
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100dvh;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--color-paper);
+  /* Light Graph-Paper Grid Background with thin magenta/lilac lines */
+  background-image: 
+    linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: center top;
+}
+
+main,
+footer {
+  position: relative;
+  z-index: var(--z-sticker);
+}
+
+main section[id] {
+  scroll-margin-top: var(--nav-height);
+}
+
+/* ============================================================
+   ACCESSIBILITY & FOCUS
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--color-cobalt);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 8px 16px;
+  z-index: 9999;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: top var(--transition-fast);
+}
+
+.skip-to-content:focus {
+  top: 16px;
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+::selection {
+  background: var(--color-magenta);
+  color: #FFFFFF;
+}
+
+/* ============================================================
+   TYPOGRAPHY HELPERS
+   ============================================================ */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ============================================================
+   PERMANENT MOTION DEFAULTS (DISABLED UNDER REDUCED MOTION)
+   ============================================================ */
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stickerFloat1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(var(--base-tilt, 0deg));
+  }
+  50% {
+    transform: translateY(-7px) rotate(calc(var(--base-tilt, 0deg) + 1.4deg));
+  }
+}
+
+@keyframes stickerFloat2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(var(--base-tilt, 0deg));
+  }
+  50% {
+    transform: translateY(-9px) rotate(calc(var(--base-tilt, 0deg) - 1.6deg));
+  }
+}
+
+@keyframes stickerWobble {
+  0%, 100% {
+    transform: rotate(var(--base-tilt, 0deg));
+  }
+  25% {
+    transform: rotate(calc(var(--base-tilt, 0deg) + 1.2deg));
+  }
+  75% {
+    transform: rotate(calc(var(--base-tilt, 0deg) - 1.2deg));
+  }
+}
+
+@keyframes brushWriteOn {
+  from {
+    stroke-dashoffset: 380;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero-stagger-1 {
+  animation: heroFadeUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+.hero-stagger-2 {
+  animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.hero-stagger-3 {
+  animation: heroFadeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+
+.animate-float-1 {
+  animation: stickerFloat1 4.5s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: stickerFloat2 5.5s ease-in-out infinite;
+}
+
+.animate-wobble {
+  animation: stickerWobble 6s ease-in-out infinite;
+}
+
+.brush-write-on-1 {
+  stroke-dasharray: 380;
+  stroke-dashoffset: 380;
+  animation: brushWriteOn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+}
+
+.brush-write-on-2 {
+  stroke-dasharray: 380;
+  stroke-dashoffset: 380;
+  animation: brushWriteOn 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-float-1,
+  .animate-float-2,
+  .animate-wobble,
+  .hero-stagger-1,
+  .hero-stagger-2,
+  .hero-stagger-3 {
+    animation: none !important;
+  }
+
+  .brush-write-on-1,
+  .brush-write-on-2 {
+    animation: none !important;
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .skip-to-content {
+    transition: none;
+  }
+}
